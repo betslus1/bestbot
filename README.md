@@ -79,5 +79,6 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 
 ### Описание консольного интерфейса
 <img src="https://habrastorage.org/webt/m-/yg/ba/m-ygbazu4zidvqzgy3rcj-m1z08.png" />
+
 ### Описание HTTP версии интерфейса
 <img src="https://habrastorage.org/webt/ys/_v/in/ys_vinfto1usypts_q4v1ms8l8m.png" />
