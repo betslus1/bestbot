@@ -83,3 +83,8 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 
 ### Описание HTTP версии интерфейса
 <img src="https://habrastorage.org/webt/75/w8/i0/75w8i0ngcpnwk80e4eav_2otuaa.png" />
+
+# Торговые контура
+- Боевой режим - работа на реальном счете
+- Песочница - работа в песочнице брокера
+- Бэктестинг - работа на историческиз данных для проверки работы стратегии
