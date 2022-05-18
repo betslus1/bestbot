@@ -53,13 +53,7 @@
 
 Сокращенный пример торговой стратегии (Полноценный пример смотрите в примерах торговых стратегий)
 ```
-module.exports.indicators = {
-  'RSI':{
-   'min':0,
-   'max':100,
-   'buy':40,
-   'sell':60
-}}
+module.exports.indicators = { 'RSI':{ 'min':0, 'max':100, 'buy':40, 'sell':60 }};
   
 module.exports.step = function (lastCandles, currentOrder, currentBalance) {
    let indicators['RSI'] = calc_RSI(lastCandles);
