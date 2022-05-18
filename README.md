@@ -31,6 +31,7 @@
 - Возможность интеграции собственных торговых стратегий и их тестирование
 - Кэширование маркет даты
 - Открытие/Закрытие тестовых счетов. Зачисление балансов.
+- Удобная система визуализации работы системы в реальном времени
 
 # Торговая стратегия
 ### Примеры торговых стратегий
@@ -70,3 +71,13 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
    return {logs, commands, indicators};
  }
 ```
+
+# Интерфейс
+Данные обновляются в реальном времени
+ - consoleUI - Набор модулей для управления консольным интерфейсом
+ - Web - Набор модулей для управления HTTP версией интерфейса по протоколам HTTP и WebSocket
+
+### Описание консольного интерфейса
+<img src="https://habrastorage.org/webt/m-/yg/ba/m-ygbazu4zidvqzgy3rcj-m1z08.png" />
+### Описание HTTP версии интерфейса
+<img src="https://habrastorage.org/webt/ys/_v/in/ys_vinfto1usypts_q4v1ms8l8m.png" />
