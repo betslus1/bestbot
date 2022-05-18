@@ -72,8 +72,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
  }
 ```
 
-# Интерфейс
-Данные обновляются в реальном времени
+# Интерфейс (Все параметры в обоих интерфейсах обновляются в реальном времени во всех режимах)
  - consoleUI - Набор модулей для управления консольным интерфейсом
  - Web - Набор модулей для управления HTTP версией интерфейса по протоколам HTTP и WebSocket
 
@@ -81,4 +80,4 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 <img src="https://habrastorage.org/webt/m-/yg/ba/m-ygbazu4zidvqzgy3rcj-m1z08.png" />
 
 ### Описание HTTP версии интерфейса
-<img src="https://habrastorage.org/webt/ys/_v/in/ys_vinfto1usypts_q4v1ms8l8m.png" />
+<img src="https://habrastorage.org/webt/75/w8/i0/75w8i0ngcpnwk80e4eav_2otuaa.png" />
