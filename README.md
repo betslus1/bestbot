@@ -7,7 +7,9 @@
 
 # Установка
 `git clone git@github.com:betslus1/bestbot.git`
+
 OR
+
 `Скопировать данный депозитарий`
 
 # Настройка системы
