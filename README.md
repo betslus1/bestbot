@@ -97,3 +97,5 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 - Тип сообщения - тип регистрируемого события (debug - скрытое сохранение события, global - отображаем событие в консоли, error - отображаем и отправляем уведомление, увеличиваем счетчик ошибок)
 - Вывод в глобальном логе <bool> - Дополнительный флаг отображение в глобальном логе
 - Отправка уведомления <bool> - Отправка сообщения о событии в Telegram
+
+ <img src="https://habrastorage.org/webt/cq/mr/6g/cqmr6gk0nc1ywuvbvwvfewwru8s.png" />
