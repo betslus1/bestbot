@@ -50,3 +50,27 @@
  - Разместите свою торговую стратегию в папке strategy
  - Дополнительно можете указать описание индикаторов на основе которых принимаются решения
  - В вашей торговой стратегии должна быть основная функция обработки "Step". Функция Step принимает Входные параметры, проводит все нобходимые действия в рамках стратегии и выносит решение, и возвращает в торговую систему принятое решение
+
+Сокращенный пример торговой стратегии (Полноценный пример смотрите в примерах торговых стратегий)
+```
+module.exports.indicators = {
+  'RSI':{
+   'min':0,
+   'max':100,
+   'buy':40,
+   'sell':60
+}}
+  
+module.exports.step = function (lastCandles, currentOrder, currentBalance) {
+   let indicators['RSI'] = calc_RSI(lastCandles);
+   if(indicators['RSI'] > module.exports.indicators['RSI']?.buy){
+     commands.push({'type':'Buy', 'price':price.Buy, 'quantity': quantity.Buy});
+     logs.push('Покупаем: ${price.Buy} x ${quantity.Buy}');
+   }
+   if(indicators['RSI'] < module.exports.indicators['RSI']?.sell){
+     commands.push({'type':'Sell', 'price':price.Sell, 'quantity': quantity.sell});
+     logs.push('Продаем: ${price.Buy} x ${quantity.Buy}');
+   }
+   return {logs, commands, indicators};
+ }
+```
