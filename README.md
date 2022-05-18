@@ -3,9 +3,12 @@
 
 # Зависимости
 Данная сборка была протестирована в ОС Debian 11 и в NodeJs 16, но предполагается, что она будет работать и в других системах с установленным nodejs.
+Используется NodeJS собственной разработки: https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS
 
 # Установка
 `git clone git@github.com:betslus1/bestbot.git`
+OR
+`Скопировать данный депозитарий`
 
 # Настройка системы
 Настройка системы осуществляется в файле options.js
