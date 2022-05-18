@@ -74,8 +74,9 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 
 # Интерфейс 
 ### (Все параметры в обоих интерфейсах обновляются в реальном времени во всех режимах)
- - consoleUI - Набор модулей для управления консольным интерфейсом
- - Web - Набор модулей для управления HTTP версией интерфейса по протоколам HTTP и WebSocket
+ - consoleUI.js - Набор модулей для управления консольным интерфейсом
+ - Web.js - Набор модулей для управления HTTP версией интерфейса по протоколам HTTP и WebSocket
+ - Страницы Веб-версии находятся в папке views, используется шаблонизатор EJS + express
 
 ### Описание консольного интерфейса
 <img src="https://habrastorage.org/webt/m-/yg/ba/m-ygbazu4zidvqzgy3rcj-m1z08.png" />
