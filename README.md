@@ -94,7 +94,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 ### Процесс симуляции с визуализацией в реальном времени
 <img src="https://habrastorage.org/webt/gh/y6/wq/ghy6wqgykkp3xg5g_riwm49kvac.gif" />
 
-### Поддержка мобильных экранов
+### Поддержка мобильных устройств
 <img src="https://habrastorage.org/webt/4l/yf/de/4lyfdefv0xkbbsxuccefje5tsiq.png" />
 
 # Торговые контура
