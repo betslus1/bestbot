@@ -84,7 +84,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
  - Страницы Веб-версии находятся в папке `/views`, используется шаблонизатор EJS + express
 
 ### Описание консольного интерфейса
-<img src="https://habrastorage.org/webt/m-/yg/ba/m-ygbazu4zidvqzgy3rcj-m1z08.png" />
+<img src="https://habrastorage.org/webt/e1/tw/lo/e1twloa5sf_1jtgomhhmzbi4p-y.gif" />
 
 ### Описание HTTP версии интерфейса
 <img src="https://habrastorage.org/webt/75/w8/i0/75w8i0ngcpnwk80e4eav_2otuaa.png" />
