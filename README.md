@@ -95,7 +95,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 <img src="https://habrastorage.org/webt/gh/y6/wq/ghy6wqgykkp3xg5g_riwm49kvac.gif" />
 
 ### Поддержка мобильных устройств
-<img src="https://habrastorage.org/webt/4l/yf/de/4lyfdefv0xkbbsxuccefje5tsiq.png" />
+<img src="https://habrastorage.org/webt/fa/wf/vy/fawfvyzzqlac7epjcocz3_wts48.png" />
 
 # Торговые контура
 - Боевой режим - работа на реальном счете
