@@ -70,11 +70,11 @@ async function init(){
   await app.loadTrades();//Синхронизация сделок
 
   //Периодическое обновление, можно заменить периодичность
-  jobs['step']        = new CronJob('*/5 * * * * *', app.step, null, true, 'Europe/Moscow');
-  jobs['balanceSync'] = new CronJob('*/3 * * * * *', app.balanceSync, null, true, 'Europe/Moscow');
-  jobs['ordersSync']  = new CronJob('*/3 * * * * *', app.ordersSync,  null, true, 'Europe/Moscow');
-  jobs['loadTrades']  = new CronJob('0 * * * * *', app.loadTrades,  null, true, 'Europe/Moscow');
-  jobs['clearError']  = new CronJob('0 0 * * * *', app.clearError,  null, true, 'Europe/Moscow'); //Сброс счетчика ошибок
+  jobs['step']        = new CronJob('*/5 * 7-23,0-2 * * 1-5', app.step, 			 null, true, 'Europe/Moscow'); //с пн по пятницу с 7 утра до 2 ночи каждые 5 сек
+  jobs['balanceSync'] = new CronJob('*/3 * 7-23,0-2 * * 1-5', app.balanceSync, null, true, 'Europe/Moscow');
+  jobs['ordersSync']  = new CronJob('*/3 * 7-23,0-2 * * 1-5', app.ordersSync,  null, true, 'Europe/Moscow');
+  jobs['loadTrades']  = new CronJob('0   * 7-23,0-2 * * 1-5', app.loadTrades,  null, true, 'Europe/Moscow');
+  jobs['clearError']  = new CronJob('0   0 7-23,0-2 * * 1-5', app.clearError,  null, true, 'Europe/Moscow'); //Сброс счетчика ошибок
 }
 
 //Главный модуль робота
