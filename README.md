@@ -1,16 +1,21 @@
 # Торговая система "BestBot v.9000"
 Данная сборка является примером торгового робота в рамках конкурса Тинькоф Инвестиций
 
+https://github.com/Tinkoff/invest-robot-contest
+
 # Зависимости
 Данная сборка была протестирована в ОС Debian 11 и в NodeJs 16, но предполагается, что она будет работать и в других системах с установленным nodejs.
+
 Используется NodeJS SDK для API Тинькофф Инвестиций GRPC собственной разработки: https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS
 
 # Установка
-`git clone git@github.com:betslus1/bestbot.git`
+`git clone --recurse-submodules git@github.com:betslus1/bestbot.git`
 
 OR
 
-`Скопировать данный депозитарий`
+`Скопировать данный репозитарий`
+
+`Скопировать репозитарий https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS в папку lib`
 
 # Настройка системы
 Настройка системы осуществляется в файле `options.js`
@@ -43,6 +48,11 @@ OR
 - Удобная система визуализации работы системы в реальном времени
 - Отслеживание статуса работы биржи
 - Адаптация под мобильные экраны телефона веб версии
+
+
+# Схема взаимодействия модулей приложения
+<img src="https://habrastorage.org/webt/aq/zn/lj/aqznljwebankysnyhhxbmct82ho.png" />
+
 
 # Торговая стратегия
 ### Примеры торговых стратегий
@@ -95,7 +105,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 - Левая верхняя часть окна - Лог работы стратегии
 - Нижняя левая часть окна - Лог работы торговой системы и глобальные события
 - Правая часть окна - От верхнего к нижнему: Информация о инcтрументах и балансах, текущие заявки, свечи, стакан
-- Обновление содержимого окон происходит с помощью функции consoleUI.render('имя окна','содержимое')
+- Обновление содержимого окон происходит с помощью функции `consoleUI.render('имя окна','содержимое')`
 
 ### Описание HTTP версии интерфейса
 <img src="https://habrastorage.org/webt/75/w8/i0/75w8i0ngcpnwk80e4eav_2otuaa.png" />
@@ -104,7 +114,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 ### Процесс симуляции с визуализацией в реальном времени
 <img src="https://habrastorage.org/webt/gh/y6/wq/ghy6wqgykkp3xg5g_riwm49kvac.gif" />
 
-Обновление содержимого окон происходит с помощью функции web.render('имя окна','содержимое') по протоколу WebSocket
+Обновление содержимого окон происходит с помощью функции `web.render('имя окна','содержимое')` по протоколу WebSocket
 
 ### Поддержка мобильных устройств
 <img src="https://habrastorage.org/webt/fa/wf/vy/fawfvyzzqlac7epjcocz3_wts48.png" />
