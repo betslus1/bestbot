@@ -21,6 +21,7 @@ module.exports = {
 	'telegramKey'  : '5390000718:AAHBQvYsH6SX5-icva_Q3HTtQuhU4oiQwP0', //Создается через бота @botFather в телеграм
 	'chatId'	   : 129531676, //смотрим через бота (отправить боту в телеграме /start и запустить приложение, потом вписать сюда ID вашего чата),
 	'maxCountError': 100, //Количество ошибок в час для автоматической аварийной остановки
+	'minMoneyBalance' : -10000,
 	'limit'       : { //rpm
 		'marketData' : 30,
 		'orders'     : 30,
