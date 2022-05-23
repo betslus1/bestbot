@@ -1,0 +1,36 @@
+		</div>
+    </main>
+  </div>
+</div>
+
+
+
+	
+    <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.min.js"><\/script>')</script><script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+	<script>
+
+	  var currentWorkmode = '<%= options.workmode %>';
+
+	  $(document).ready( function () {
+	  	console.log('start document ready');
+	  	socket.emit('renderStatus', {});
+
+	  } );
+
+
+	</script>
+
+	<style>
+		.nav-item.active {
+			background-color:#626262;: ;
+		}
+		td {
+			text-align: center;
+		}
+	</style>
+
+</html>

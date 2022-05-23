@@ -1,0 +1,303 @@
+<%- include('header') %>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<div class="container-fluid">
+	<div class="settings row m-2" id='settings'>
+		<h3 class="col-12 igra">Direct mod</h3>
+
+		<div class=" col-12 row p-3 m-3 d-none d-md-block" style="width: 18rem;">
+		  <img class="col-3" src="/img/billions.webp" alt="Card image cap">
+		  <div class="col-9">
+		    <p class="card-text"><h1><i class="">Смотреть игру далеко не так интересно, как играть самому. <br>
+				О Иль Нам</i></h1></p>
+		  </div>
+		</div>
+
+		<div class="col-12 border p-5">
+			<h3 class="mt-1 igra">Выберите тип счета</h3>
+			<div class="form-check">
+			  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked onclick="$('#type1').html('Реальный счет'); $('#type2').html('Песочница');  ">
+			  <label class="form-check-label type_account igra" for="exampleRadios1" id="type1">
+			    Реальный счет
+			  </label>
+			</div>
+			<div class="form-check">
+			  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" onclick="$('#type2').html('Реальный счет'); $('#type1').html('Песочница');">
+			  <label class="form-check-label type_account igra" for="exampleRadios2" id="type2">
+			    Песочница
+			  </label>
+			</div>
+
+			<h3 class="mt-4 igra">Выберите уровень сложности</h3>
+			<div class="form-check">
+			  <select class="select2 igra">
+			  	<% for (let i of Object.keys(instruments)){ %>
+			  		<option value="<%= instruments[i].figi %>"><%= instruments[i].name %></option>
+			  	<% } %>
+			  </select>
+
+			  <div id="subscribeStatus"></div>
+			  <button class="btn btn-info m-3 igra" onclick="$('#subscribeStatus').load('/directmode/subscribe?figi='+$('.select2').val()); $(this).hide(1000); $('#btnStart').show(1000);">Подписаться</button>
+
+
+			  <div class="form-check m-4">
+			    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+			    <label class="form-check-label igra" for="defaultCheck1">
+			      Подтвердите, что вы не человек, а рыночная заявка.
+			    </label>
+			  </div>
+
+			  <button id="btnStart" class="btn btn-bg btn-danger igra" style="display:none" onclick="$('#settings').hide(1000); $('#game').show(1000);">Да начнется игра</button>
+			</div>
+
+			
+
+		</div>
+	</div>
+	<div class="row border p-5" id="game" style="display: none;">
+		<div class="container-fluid">
+
+			<div class="row">
+
+				<div class="col-md-4 col-sm-12">
+    				<canvas id="canvas" width="276" height="414"></canvas>
+    				<script src="/js/game/game.js"></script>
+				</div>
+
+				<div class="col-md-8 col-sm-12">
+					<h3 class="row dark">
+						<div class="col">Amount: <div id=amount>0</div></div>
+						<div class="col">Shares: <div id=shares>0</div></div>
+						<div class="col"><button class="btn btn-success" onclick="$('#staticBackdrop').show();">Help</button></div>
+					</h3>
+
+					<!-- Модальное окно -->
+					<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="staticBackdropLabel">Help</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть" onclick="$('#staticBackdrop').hide();"></button>
+					      </div>
+					      <div class="modal-body">
+					        <p>	Вы биржевая заявка летящая по стакану </p>
+					        <p> В случае пересечения с биржевым стаканом на бирже срабатывает сделка. Если пересечение в верхней части стакана то рыночная продажа, в нижней части стакана - рыночная покупка.</p>
+					        <p>За каждый стакан в котором вас не смогли купить, вы получаете 5 копеек.</p>
+
+					        <p>Используются реальные рыночные данные</p>
+
+					        <p>В случае повышения цены на рынке, окно пролета становится выше, или ниже в случае понижения цены</p>
+
+					        <p>Размер окна для прохождения измеряется текущим спредом на рынке</p>
+
+
+					        <p>Amount - Текущий размер ваших денежных средств</p>
+
+					        <p>Shares - Текущее количество ваших ценных бумаг</p>
+
+					        <p>Profit - Ваша прибыль или убыток относительно стартового баланса</p>
+
+
+					        <p>PS. Сервис доступен во время работы бирж</p>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="$('#staticBackdrop').hide();">Не понял</button>
+					        <button type="button" class="btn btn-primary" onclick="$('#staticBackdrop').hide();">Понял</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
+
+					<h4>asks</h4>
+					<div class="row" id="game_asks">
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+					</div>
+
+					<h4>opt</h4>
+					<div class="row mb-2" id="game_opts">
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+					</div>
+
+
+					<h4>bids</h4>
+					<div class="row" id="game_bids">
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+						<div class="col"></div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script>
+
+	var amount   = 0;
+	var quantity = 0;
+	var buyPrice = 150;
+	var sellPrice = 150;
+	var mediumPrice = 150;
+	var lastAdd = new Date();
+
+	$(document).ready(function() {
+	    $('.select2').select2();
+
+	    exchangePipes = [];
+		socket.on('game_bids', function(json){
+			let bids = json.bids;
+			let asks = json.asks;
+			let htmlBids = json.htmlBids;
+			let htmlAsks = json.htmlAsks;
+			let time = json.time;
+
+			let blocks = $('#game_bids div');
+			let alocks = $('#game_asks div');
+			let olocks = $('#game_opts div');
+
+			exchangePipes = [];
+			var opt = {};
+
+			for (let i in bids){
+				if (blocks[i] && bids[i]){
+					$(blocks[i]).html(htmlBids[i]);
+					$(blocks[i]).addClass('table');
+					$(blocks[i]).addClass('table-sm');
+					$(blocks[i]).addClass('table-dark');
+
+					var previusOpt = JSON.parse(JSON.stringify(opt));
+
+					opt = {};
+
+					opt.gap = (asks[i][0].price - bids[i][0].price - 0.01).toFixed(2);
+					opt.center = (asks[i][0].price/2 + bids[i][0].price/2).toFixed(2);
+					opt.chAbs  = (opt.center - previusOpt.center).toFixed(2);
+					opt.change = (opt.chAbs * 1000 / asks[i][0].price ).toFixed(2);
+
+					let optHtml = [];
+					for (let o of Object.keys(opt)){
+						optHtml.push(`${o}: ${opt[o]}`);
+					}
+
+					exchangePipes.push(JSON.parse(JSON.stringify(opt)));
+
+					$(olocks[i]).html(optHtml.join("<br>"));
+
+					$(alocks[i]).html('<h4>'+ time[i]+'</h4>' + htmlAsks[i]);
+					$(alocks[i]).addClass('table');
+					$(alocks[i]).addClass('table-sm');
+					$(alocks[i]).addClass('table-dark');	
+
+					buyPrice    = asks[i][0]?.price ?? 0;
+					sellPrice   = bids[i][0]?.price ?? 0;
+					mediumPrice = (parseFloat(buyPrice) + parseFloat(sellPrice))/2;
+				}
+			}
+
+
+			if (opt.change != 0 || ( (new Date()).getTime() - lastAdd) > 3000){
+				lastAdd = (new Date()).getTime();
+				pipe.addPipe(true);
+			}
+
+		});
+	});
+
+
+	function doOrder(orderType, price){
+
+		if (orderType == 'Sell'){
+			var type   = 'Продажа';
+			var price  = sellPrice;
+			var comission = (price * 0.025 / 100).toFixed(2) 
+			amount = parseFloat(parseFloat(amount) + parseFloat(price) - parseFloat(comission)).toFixed(2);
+			quantity--;
+			$('#amount').html(parseFloat(amount).toFixed(2));
+			$('#shares').html(quantity);
+		}else{
+			var type   = 'Покупка';
+			var price  = buyPrice;
+			var comission = (price * 0.025 / 100).toFixed(2);
+			amount = parseFloat(parseFloat(amount) - parseFloat(price) - parseFloat(comission)).toFixed(2);
+			quantity++;
+			$('#amount').html(parseFloat(amount).toFixed(2));
+			$('#shares').html(quantity);
+		}
+		
+		let msg = `<div class="alert alert-success d-none d-md-block" role="alert">
+					  <h4 class="alert-heading">Успешная сделка!</h4>
+					  <p>Тип: ${type}</p>
+					  <p>Цена: ${price}</p>
+					  <p>Количество: 1</p>
+					  <p>Баланс ЦБ: ${quantity}</p>
+					  <p>Денежные средства: ${amount}</p>
+					  <p></p>
+					  <hr>
+					  <p class="mb-0">Комиссия брокера ${ comission }.</p>
+					</div>`;
+
+		$.notify({
+			message: msg, //(String) Your notification message
+			delay: 2000, //(Integer) (Optional) (Default=2000) Amount of time in millisecond the notification will be displayed (plus the animations time)
+			className: 'gameNotify' //(String) (Optional) Add this class to your notification, may be usefull to match your alert message style for example
+		});
+	}
+
+
+	  function workmode(mode){
+	  	return true;
+	  }
+
+</script>
+
+<style>
+	.gameNotify{
+		width: 500px;
+		height: 250px;
+		position: absolute;
+		bottom: 50px;
+		right: 50px;
+	}
+
+	@font-face {
+		font-family: "cyber"; 
+		src: url("/sfx/Cyberpunk.ttf") format("truetype"); 
+		font-style: normal; 
+		font-weight: normal; 
+	} 
+		
+	@font-face {
+		font-family: "igra"; 
+		src: url("/sfx/SquidIgra.otf") format("truetype"); 
+		font-style: normal; 
+		font-weight: normal; 
+	} 
+
+	.cyber {
+		font-family: cyber;
+	}
+
+	.igra {
+		font-family: igra;
+	}
+
+
+	
+</style>
+
+<%- include('footer') %>

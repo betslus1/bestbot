@@ -1,0 +1,43 @@
+<%- include('header') %>
+
+<div class="container-fluid">
+	<h3 class="col-12">Итоги</h3>
+</div>
+
+<table id="operationsTable" style="width: 100%;" class="table table-small">
+	<thead>
+		<tr>
+			<th>figi</th>
+			<th>profit</th>
+			<th>comission</th>
+			<th>profit_RUB</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% for (let l of itog) { %>
+			<tr>
+				<td><%=instruments[l.figi]?.name%></td>
+				<td><%=fixPrice(l.profit)%></td>
+				<td><%=fixPrice(l.comission)%></td>
+				<td><%=fixPrice(l.profit_RUB)%></td>
+			</tr>
+		<% } %>
+	</tbody>
+</table>
+
+<script>
+
+	$(function(){
+		$(`#operationsTable`).DataTable({
+	      "autoWidth": false,
+	      "pageLength":100,
+	      "order": [[0, 'desc']],
+		});
+	});
+
+  function workmode(mode){
+  	return true;
+  }
+</script>
+
+<%- include('footer') %>

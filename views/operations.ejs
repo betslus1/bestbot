@@ -1,0 +1,55 @@
+<%- include('header') %>
+
+<div class="container-fluid">
+	<h3 class="col-12">Сделки</h3>
+</div>
+
+<table id="operationsTable" style="width: 100%;" class="table table-small">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>figi</th>
+			<th>date</th>
+			<th>profit</th>
+			<th>comisstion</th>
+			<th>buy</th>
+			<th>sell</th>
+			<th>currency</th>
+			<th>profit</th>
+			<th>type</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% for (let l of operations) { %>
+			<tr>
+				<td><%=l.id%></td>
+				<td><%=instruments[l.figi]?.name%></td>
+				<td><%=moment(l.date).format("YYYY-MM-DD HH:mm:ss")%></td>
+				<td><%=fixPrice(l.profit)%></td>
+				<td><%=fixPrice(l.comission)%></td>
+				<td><%=l.buy%></td>
+				<td><%=l.sell%></td>
+				<td><%=l.currency%></td>
+				<td><%=fixPrice(l.profit_RUB)%></td>
+				<td><%=l.type%></td>
+			</tr>
+		<% } %>
+	</tbody>
+</table>
+
+<script>
+
+	$(function(){
+		$(`#operationsTable`).DataTable({
+	      "autoWidth": false,
+	      "pageLength":100,
+	      "order": [[0, 'desc']],
+		});
+	});
+
+  function workmode(mode){
+  	return true;
+  }
+</script>
+
+<%- include('footer') %>

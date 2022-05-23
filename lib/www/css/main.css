@@ -1,0 +1,224 @@
+        .table thead th {
+          font-size: .7rem;
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        table.dataTable thead th, table.dataTable thead td {
+          padding: 10px 0px !important;
+          text-align: center;
+          color: #51545f !important;
+          background-color: #dee2f0 !important;
+        }
+
+          .success{
+    background: #ccffcc;
+  }
+  .warning{
+    background: #ffdcd1;
+  }
+
+  .wall_red {
+    background: #ed8891;
+  }
+  .wall_red_up {
+    background: #efb8bd;
+  }
+
+  .wall_green {
+    background: #8bcd9b;
+  }
+  .wall_green_up {
+    background: #b7e0c1;
+  }
+
+  table.dataTable tbody th, table.dataTable tbody td {
+    padding: 8px 1px !important;
+  }
+
+  td.cv a{
+    color: black;
+  }
+
+  .bg-purple {
+    background-color: #6f42c1;
+ }
+
+  .bg-blackBlue {
+    background-color: rgba(0,0,0,.87);
+ }
+
+
+
+  .text-muted {
+      color: #6c757d !important;
+      font-size: 10pt;
+  }
+
+
+small {
+  line-height: 100%;
+}
+
+
+
+
+
+
+
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+.hide{
+  display: none;
+  transition: 1s;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 0;
+    transition: 1s;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+  line-height: 0.9;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand-2 {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+
+  background: url('/img/logo2.png');
+  background-color: rgba(0, 0, 0, 0);
+  background-size: auto;
+  background-size: 100%;
+}
+
+.navbar-brand {
+  margin-left: 35%;
+  margin-top: -5%;
+  padding-top: 0;
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.btn-group-xs > .btn, .btn-xs {
+  padding: .3rem .4rem;
+  font-size: .7rem;
+  line-height: .9;
+  border-radius: .2rem;
+}
+
+tr.good td {
+    background-color: #ccffcc;
+}
+
+tr.bad td {
+    background-color: #ffdcd1;
+}
+
+tr.selected td {
+    background-color: #80cde450;
+}
+
+.header_tbody{
+  cursor: pointer;
+}
+
+.header_tbody:hover{
+  background-color: #0001;
+}
+
+div[class*="header_"], span[class*="header_"]{
+  transition: .4s ease-out;
+}
+
+
+.badge-FF0000 {
+    color: #fff;
+    background-color: #FF0000;
+}
+
+.badge-20B2AA {
+    color: #fff;
+    background-color: #20B2AA;
+}
+
+.log_table table{
+  border: 1px solid #8888;
+  width: 100%;
+  text-align: center;
+}

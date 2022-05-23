@@ -1,0 +1,433 @@
+<%- include('header') %>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/stock/modules/data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+
+<div class="container-fluid p-0">
+
+	<h3 class="mt-4">Выберите инструмент</h3>
+	<div class="row p-sm-0 m-sm-0">
+	  <div class="col-md-6 col-sm-12 p-sm-0 m-sm-0">
+		  <select class="select2" style="max-width: 300px;">
+		  	<% for (let i of Object.keys(instruments)){ %>
+		  		<option value="<%= instruments[i].figi %>" <%= (options.instrument == instruments[i].figi)?'selected':'' %>><%= instruments[i].name %></option>
+		  	<% } %>
+		  </select>
+	  </div>
+	  <div class="col-md-2  col-sm-12">
+	 	 <button class="btn btn-info m-3" onclick="$('#subscribeStatus').load('/main/subscribe?figi='+$('.select2').val()); $('#subscribeStatus').show() ">Подписаться</button>
+	  </div>
+	  <div id="subscribeStatus" class="alert alert-info col-md-2  col-sm-12" style="display:none;"></div>
+	</div>
+
+
+	<div class="settings row m-2" id='sandbox_settings' style="display:none">
+		<h3 class="col-md-12 col-sm-12">Настройки песочницы</h3>
+		<div class="col-md-3 col-sm-12 border">
+			<h4>Текущий баланс: </h4><br>
+			<h5 id="sandboxBalance"><%= sandboxBalance %></h5>
+		</div>
+
+		<div class="col-md-3 col-sm-12 border">
+			<form action="/sandboxPayIn">
+			  <div class="form-row align-items-center">
+			    <div class="col-md-auto col-sm-12">
+			      <label for="inlineFormInput">Заработать деньги <br><small>(Бесплатно, быстро, без смс)</small></label>
+			      <input name="sum" type="text" class="form-control mb-2" id="inlineFormInput" placeholder="100000" value="10000">
+			    </div>
+			    <br/>
+			    <div class="col-md-auto col-sm-12">
+			      <button type="submit" class="btn btn-primary mb-2" onclick="$('#sandboxBalance').load('/sandboxPayIn?sum='+$('#inlineFormInput').val()); return false;">Заработать</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+
+	<div class="settings row m-2" id='backtest_settings' style="display:none">
+		<h3 class="col-md-12 col-sm-12">Настройки бэктестинга</h3>
+		<div class="col-md-3 col-sm-12 border">
+			<table class="table">
+				<tr>
+					<td>Время</td>
+					<td id="backtestTime"><%= moment(backtest.time).format('YYYY-MM-DD HH:mm') %></td>
+				</tr>
+				<tr>
+					<td>Статус</td>
+					<td id="backtestStatus">Остановлен</td>
+				</tr>
+				<tr>
+					<td>Валюта</td>
+					<td id="backtestBalance">0</td>
+				</tr>
+				<tr>
+					<td>Общий баланс</td>
+					<td id="backtestBalanceAll">0</td>
+				</tr>
+				<tr>
+					<td>Прибыль брокера</td>
+					<td id="backtestComission">0</td>
+				</tr>
+				<tr>
+					<td>Загруженная история</td>
+					<td id="backtestHistrory"></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="col-md-3 col-sm-12 border">
+			<form action="/sandboxPayIn">
+			  <div class="form-row align-items-center">
+			    <div class="col-md-auto col-sm-12">
+			      <label for="backtestSum">Заработать деньги <br><small>(Бесплатно, быстро, без смс)</small></label>
+			      <input name="sum" type="text" class="form-control mb-2" id="backtestSum" placeholder="100000" value="10000">
+			    </div>
+			    <br/>
+			    <div class="col-md-auto col-sm-12">
+			      <button type="submit" class="btn btn-primary mb-2" onclick="$.ajax('/sandboxPayIn?sum='+$('#backtestSum').val()); return false;">
+			      	Заработать
+			      </button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+
+		<div class="col-md-3 col-sm-12 border">
+			<form action="/sandboxPayIn">
+			  <div class="form-row align-items-center">
+			    <div class="col-md-auto col-sm-12">
+			      <label for="backtest_from">Загрузить историю (Начало)</label>
+			      <input name="sum" type="text" class="form-control mb-2" id="backtest_from" placeholder="ГГГГ-ММ-ДД" value="<%= moment().subtract(14, 'days').format('YYYY-MM-DD') %>">
+			    </div>
+			    <div class="col-md-auto col-sm-12">
+			      <label for="backtest_to">Загрузить историю (Конец)</label>
+			      <input name="sum" type="text" class="form-control mb-2" id="backtest_to" placeholder="ГГГГ-ММ-ДД" value="<%= moment().subtract(1, 'days').format('YYYY-MM-DD') %>">
+			    </div>
+			    <br/>
+			    <div class="col-md-auto col-sm-12">
+			      <button type="submit" class="btn btn-primary mb-2" onclick="$('#backtestStatus').load('/loadHistory?from='+$('#backtest_from').val()+'&to=' + $('#backtest_to').val()); return false;">
+			      	Загрузить
+			      </button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+
+		<div class="col-md-3 col-sm-12 border">
+			<form action="/sandboxPayIn">
+			  <div class="form-row align-items-center">
+
+			    <div class="col-md-auto col-sm-12">
+			      <label for="backtest_speed">Скорость работы (мс)</label>
+			      <input name="sum" type="text" class="form-control mb-2" id="backtest_speed" placeholder="ГГГГ-ММ-ДД" value="1000">
+			    </div>
+
+			    <div class="col-md-auto col-sm-12">
+			      <button type="submit" class="btn btn-primary mb-2" onclick="$('#backtestStatus').load('/backtest/start?speed='+$('#backtest_speed').val()); return false;">
+			      	Поехали!
+			      </button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8 col-sm-12" id="left">
+
+			<div class="row p-1">
+				<div class="card w-100">
+				  <div class="card-header">
+				    График
+				  </div>
+				  <div class="card-body" id="charts" style="height:400px;">
+				  </div>
+				</div>
+			</div>
+
+			<div class="row p-1">
+				<div class="card w-100">
+				  <div class="card-header">
+				    Статус
+				  </div>
+				  <div class="card-body" style="height:1000px;">
+				  	<div class="row" id="indicators">
+				  		<% for (let i of indicatorList){ %>
+				  			<div class=" p-0 text-center col-lg-2 col-6" >
+				  				<h5><%=i%></h5>
+				  				<div id="ind_<%= i %>" style="height:100px;"></div>
+				  			</div>
+				  		<% } %>
+				  	</div>
+			  		<div class="row">
+			  			<div class="col" id="main" style="height:750px;overflow-y:scroll"></div>
+			  		</div>
+				  </div>
+				</div>
+			</div>
+			<div class="row p-1">
+				<div class="card w-100">
+				  <div class="card-header">
+				    Лог
+				  </div>
+				  <div class="card-body">
+				  	<div class="container-fluid" id="log" style="height: 300px; max-height: 300px; overflow: scroll;"> </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-12 small">
+			<div class="mt-1 row p-1">
+				<div class="card w-100">
+				  <div class="card-header">Баланс</div>
+				  <div class="card-body m-0 p-0" id="balance"></div>
+				</div>
+			</div>
+			<div class="mt-1 row p-1">
+				<div class="card w-100">
+				  <div class="card-header">Заявки</div>
+				  <div class="card-body m-0 p-0" id="orders"></div>
+				</div>
+			</div>
+
+			<div class="mt-1 row p-1">
+				<div class="card w-100">
+				  <div class="card-header">Свечи</div>
+				  <div class="card-body m-0 p-0" id="candles"></div>
+				</div>
+			</div>
+
+			<div class="mt-1 row p-1">
+				<div class="card w-100">
+				  <div class="card-header">Стакан</div>
+				  <div class="card-body">
+				  	<div class="row">
+					  	<div class="col p-0">	
+						  <h5>Покупка</h5>
+						  <div class="container p-0" id="bids"></div>
+						</div>
+						<div class="col p-0">
+						  <h5>Продажа</h5>
+						  <div class="container p-0" id="asks"></div>
+						</div>
+				  	</div>
+				  </div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+  var chart = {};
+  Highcharts.getJSON('/candles', function (data) {
+
+  // create the chart
+  chart['candles'] = Highcharts.stockChart('charts', {
+    rangeSelector: {
+        buttons: [{
+            type: 'min',
+            count: 1,
+            text: '1m'
+        },{
+            type: 'hour',
+            count: 1,
+            text: '1h'
+        }, {
+            type: 'day',
+            count: 1,
+            text: '1D'
+        }, {
+            type: 'all',
+            count: 1,
+            text: 'All'
+        }],
+        selected: 1,
+        inputEnabled: false
+    },
+
+    pinchType : 'y',
+	zoomType: 'none',
+
+    series: [{
+      type: 'candlestick',
+      data: data,
+    }]
+  });
+});
+
+
+socket.on('render', function(json){
+	let el  = json.el;
+	let msg = json.msg;
+
+	$(`#${el}`).html(`${msg}`);
+
+	$(`#${el} table`).css('width','100%');
+
+	$(`#${el} table`).addClass('compact');
+	$(`#${el} table`).addClass('table');
+	$(`#${el} table`).addClass('display');
+
+	$(`#${el} table`).addClass('table-sm');
+
+	$(`#${el} table`).addClass('table');
+	/*
+	$(`#${el} table`).DataTable({
+		  'fixedHeader': false,
+	      "paging":   false,
+	      "ordering": false,
+	      "info":     false,
+	      "searching" : false,
+	      "autoWidth": false,
+	  });
+	  */
+
+
+	$(`#${el} thead`).hide();
+});
+
+socket.on('append', function(json){
+	let el  = json.el;
+	let msg = json.msg;
+
+	$(`#${el}`).prepend(`<div class="row">${msg}</div>`);
+});
+
+socket.on('charts', function(data){
+	chart['candles'].series[0].update({data}, true);
+	chart['candles'].xAxis[0].setExtremes() ;
+});
+
+
+
+
+var gaugeOptions = {
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor:
+                Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    exporting: {
+        enabled: false
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        tickWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+<% for (let i of indicatorList){ %>
+		chart['<%-i%>'] = Highcharts.chart('ind_<%-i%>', Highcharts.merge(gaugeOptions, {
+	    yAxis: {
+	        min: <%= indicators[i].min %>,
+	        max: <%= indicators[i].max %>,
+	        title: {
+	            text: '<%-i%>'
+	        }
+	    },
+
+	    series: [{
+	        name: '<%-i%>',
+	        data: [1],
+	    }]
+
+	}));
+<% } %>
+
+$(function(){
+
+	$('.select2').select2();
+
+	if (currentWorkmode == 'sandbox'){
+    	$('#sandbox_settings').show();
+  		$('#topMenu .nav-item').removeClass('active');
+  		$('#topMenu #' + 'sandbox').addClass('active');
+    }
+	workmode(currentWorkmode);
+
+});
+
+socket.on('indicators', function(json){
+	if (json == null){
+		return;
+	}
+	for (let key of Object.keys(json)){
+		if (chart[key] != undefined){
+			point = chart[key].series[0].points[0];
+			point.update(json[key]);
+		}
+	}
+});
+
+
+  function workmode(mode){
+	$('#topMenu .nav-item').removeClass('active');
+	$('#topMenu #' + mode).addClass('active');
+
+	$('.settings').hide(100);
+	$('#'+mode+'_settings').show(100);
+
+    currentWorkmode = mode;
+
+	socket.emit('workmode', mode);
+	return false;
+  }
+
+</script>
+<%- include('footer') %>
