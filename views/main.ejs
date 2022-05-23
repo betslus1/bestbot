@@ -235,7 +235,7 @@
   Highcharts.getJSON('/candles', function (data) {
 
   // create the chart
-  chart['candles'] = Highcharts.stockChart('charts', {
+  chart['candles'] = Highcharts.chart('charts', {
     rangeSelector: {
         buttons: [{
             type: 'min',
@@ -258,16 +258,52 @@
         inputEnabled: false
     },
 
+	xAxis: {
+        type: 'datetime',
+
+    },
     pinchType : 'y',
 	zoomType: 'none',
 
+    title:'График',
+
     series: [{
+      name:'Свечи',
       type: 'candlestick',
       data: data,
-    }]
+    },
+    {//sell
+
+      name:'Продажа',
+      type: 'scatter',
+      data: [],
+	  marker: {
+         radius: 10,
+	     fillColor: 'red',
+	  },
+	},
+    {//buy
+
+      name:'Покупка',
+      type: 'scatter',
+      data: [[1653324117655,11.15]],
+	  marker: {
+	     radius: 10,
+	     fillColor: 'green',
+	  },
+	}
+	]
   });
 });
 
+setInterval(function(){
+	$.getJSON( "/trades", function( data ) {
+		chart['candles'].series[1].update({data: data.buys}, true);
+		chart['candles'].series[2].update({data: data.sells}, true);
+		console.log(data);
+		chart['candles'].xAxis[0].setExtremes();
+	});
+}, 10000);
 
 socket.on('render', function(json){
 	let el  = json.el;
@@ -308,11 +344,18 @@ socket.on('append', function(json){
 
 socket.on('charts', function(data){
 	chart['candles'].series[0].update({data}, true);
-	chart['candles'].xAxis[0].setExtremes() ;
+	chart['candles'].xAxis[0].setExtremes();
 });
 
+socket.on('buy', function(data){
+	chart['candles'].series[1].update({data}, true);
+	chart['candles'].xAxis[0].setExtremes();
+});
 
-
+socket.on('sell', function(data){
+	chart['candles'].series[2].update({data}, true);
+	chart['candles'].xAxis[0].setExtremes();
+});
 
 var gaugeOptions = {
     chart: {
