@@ -97,7 +97,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 - Левая верхняя часть окна - Лог работы стратегии
 - Нижняя левая часть окна - Лог работы торговой системы и глобальные события
 - Правая часть окна - От верхнего к нижнему: Информация о инcтрументах и балансах, текущие заявки, свечи, стакан
-- Обновление содержимого окон происходит с помощью функции consoleUI.render('имя окна','содержимое')
+- Обновление содержимого окон происходит с помощью функции `consoleUI.render('имя окна','содержимое')`
 
 ### Описание HTTP версии интерфейса
 <img src="https://habrastorage.org/webt/75/w8/i0/75w8i0ngcpnwk80e4eav_2otuaa.png" />
@@ -106,7 +106,7 @@ module.exports.step       = function (lastCandles, currentOrder, currentBalance)
 ### Процесс симуляции с визуализацией в реальном времени
 <img src="https://habrastorage.org/webt/gh/y6/wq/ghy6wqgykkp3xg5g_riwm49kvac.gif" />
 
-Обновление содержимого окон происходит с помощью функции web.render('имя окна','содержимое') по протоколу WebSocket
+Обновление содержимого окон происходит с помощью функции `web.render('имя окна','содержимое')` по протоколу WebSocket
 
 ### Поддержка мобильных устройств
 <img src="https://habrastorage.org/webt/fa/wf/vy/fawfvyzzqlac7epjcocz3_wts48.png" />
