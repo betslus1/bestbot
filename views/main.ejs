@@ -235,7 +235,7 @@
   Highcharts.getJSON('/candles', function (data) {
 
   // create the chart
-  chart['candles'] = Highcharts.chart('charts', {
+  chart['candles'] = Highcharts.stockChart('charts', {
     rangeSelector: {
         buttons: [{
             type: 'min',
@@ -272,6 +272,7 @@
       type: 'candlestick',
       data: data,
     },
+    /*
     {//sell
 
       name:'Продажа',
@@ -292,10 +293,13 @@
 	     fillColor: 'green',
 	  },
 	}
+	*/
 	]
   });
 });
 
+/*
+TODO: Включить отметки на графике покупок
 setInterval(function(){
 	$.getJSON( "/trades", function( data ) {
 		chart['candles'].series[1].update({data: data.buys}, true);
@@ -305,6 +309,7 @@ setInterval(function(){
 	});
 }, 10000);
 
+*/
 socket.on('render', function(json){
 	let el  = json.el;
 	let msg = json.msg;
