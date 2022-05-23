@@ -6,11 +6,12 @@
 Используется NodeJS SDK для API Тинькофф Инвестиций GRPC собственной разработки: https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS
 
 # Установка
-`git clone git@github.com:betslus1/bestbot.git`
+`git clone --recurse-submodules git@github.com:betslus1/bestbot.git`
 
 OR
 
-`Скопировать данный депозитарий`
+`Скопировать данный репозитарий`
+`Скопировать репозитарий https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS в папку lib`
 
 # Настройка системы
 Настройка системы осуществляется в файле `options.js`
