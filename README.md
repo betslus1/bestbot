@@ -11,6 +11,7 @@
 OR
 
 `Скопировать данный репозитарий`
+
 `Скопировать репозитарий https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS в папку lib`
 
 # Настройка системы
