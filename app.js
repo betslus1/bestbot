@@ -35,6 +35,7 @@ newCandle        = {'time':new Date(0),o:0,l:0,h:0,c:0,v:0};
 candleHistory    = [];
 sandboxBalance   = 0;
 backtestBalance  = 0;
+realBalance			 = 0;
 exchangeStatus   = false;
 errorsCount      = 0;
 lockTime         = 0; //Задержки в работе робота для избежания проблем с лагами брокера
@@ -69,7 +70,7 @@ async function init(){
   await app.loadTrades();//Синхронизация сделок
 
   //Периодическое обновление, можно заменить периодичность
-  jobs['step']         = new CronJob('*/5 * * * * *', app.step, null, true, 'Europe/Moscow');
+  jobs['step']        = new CronJob('*/5 * * * * *', app.step, null, true, 'Europe/Moscow');
   jobs['balanceSync'] = new CronJob('*/3 * * * * *', app.balanceSync, null, true, 'Europe/Moscow');
   jobs['ordersSync']  = new CronJob('*/3 * * * * *', app.ordersSync,  null, true, 'Europe/Moscow');
   jobs['loadTrades']  = new CronJob('0 * * * * *', app.loadTrades,  null, true, 'Europe/Moscow');
@@ -120,6 +121,10 @@ app = new (function (){
 
 
        await consoleUI.renderStatus(); //Отображаем в интерфейсе
+       if(options.workmode == 'sandbox'){
+         realBalance = balance['FG0000000000']?.quantity;
+         web.render('realBalance', fixPrice(realBalance));
+       }
        if(options.workmode == 'sandbox'){
          sandboxBalance = balance['FG0000000000']?.quantity;
          web.render('sandboxBalance', fixPrice(sandboxBalance));
@@ -194,7 +199,6 @@ app = new (function (){
       if (msg.payload == 'candle'){
         return app.candle(msg.candle, 'stream');
       }
-      
       if (msg.payload == 'trading_status'){
         return app.infoMsg(msg, 'stream');
       }
@@ -262,9 +266,9 @@ app = new (function (){
 
   //Обработка свечей из стрима
   this.candle = async function (candle, source){
-    if (source == 'stream'){
-      candle = broker.decodeResponse(candle, {'open' : 'Quotation', 'high': 'Quotation', 'low': 'Quotation', 'close': 'Quotation', 'time':'google.protobuf.Timestamp', 'last_trade_ts':'google.protobuf.Timestamp'});
-    }
+      if (source == 'stream'){
+        candle = broker.decodeResponse(candle, {'open' : 'Quotation', 'high': 'Quotation', 'low': 'Quotation', 'close': 'Quotation', 'time':'google.protobuf.Timestamp', 'last_trade_ts':'google.protobuf.Timestamp'});
+      }
     
       let oldCandle  = copy(newCandle);
       newCandle = {
@@ -306,15 +310,22 @@ app = new (function (){
 
   //Запускаем работу стратегии для текущей рыночной обстановки
   this.step = async function(isSim) { 
-    if(isSim == undefined && options.workmode == 'backtest' || errorsCount > options.maxCountError || brokerIsWork == false){
+    if(isSim == undefined && options.workmode == 'backtest'){
+    	log('STEP', `Идет бэектест, пропускаем события основных контуров`, 'debug');
       return;
     }
-
+    if (errorsCount > options.maxCountError || brokerIsWork == false){
+    	log('STEP', `Брокер сломался, отключаем работу торгового контура`, 'global');
+    	return;
+    }
+    if (realBalance < options.minMoneyBalance){
+    	log('STEP', `Недостаточный баланс`, 'global');
+    	return;
+    }
     if (exchangeStatus != 'SECURITY_TRADING_STATUS_NORMAL_TRADING' || (new Date()).getTime() < lockTime){ //Костыль против лага в обновлении ордеров/балансов и тд задержка 10 сек после любых действий на аккаунте
-      log('STEP', `Пропускаем шаг: exchangeStatus = ${exchangeStatus} || lockTime = ${(new Date()).getTime() - lockTime}`)
+      log('STEP', `Пропускаем шаг: exchangeStatus = ${exchangeStatus} || lockTime = ${(new Date()).getTime() - lockTime}`);
       return;
     }
-
 
     //COMPUTE STRATEGY
       log('step', `START`, 'debug', isLog.loadHistory); 
