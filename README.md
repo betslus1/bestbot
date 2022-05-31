@@ -10,6 +10,8 @@ https://github.com/Tinkoff/invest-robot-contest
 
 # Установка
 
+### Скопировать
+
 автоматически
 
 `git clone --recurse-submodules git@github.com:betslus1/bestbot.git`
@@ -20,11 +22,9 @@ https://github.com/Tinkoff/invest-robot-contest
 
 `Скопировать репозитарий https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS в папку lib`
 
-Windows, MacOS (и прочие системы, а так же в случае если программа не видит предварительно скомпилированные библиотеки)
-1) Скопировать репозиторий
-2) Удалить папку node_modules
-3) Установить библиотеки и скомпилировать командой `npm i`
-4) (опционально) Установить python3 для компиляции библиотеки sqlite3
+### Установить зависимости
+1) В консоли открыть папку проекта например `cd bestbot`
+2) Установить библиотеки и скомпилировать командой `npm i`
 
 # Настройка системы
 Настройка системы осуществляется в файле `options.js`
