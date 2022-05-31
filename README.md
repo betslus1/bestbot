@@ -9,13 +9,22 @@ https://github.com/Tinkoff/invest-robot-contest
 Используется NodeJS SDK для API Тинькофф Инвестиций GRPC собственной разработки: https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS
 
 # Установка
+
+автоматически
+
 `git clone --recurse-submodules git@github.com:betslus1/bestbot.git`
 
-OR
+вручную
 
 `Скопировать данный репозитарий`
 
 `Скопировать репозитарий https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS в папку lib`
+
+Windows (и прочие системы)
+1) Скопировать репозиторий
+2) Удалить папку node_modules
+3) Установить модули и скомпилировать командой npm i
+4) (опционально) Установить python3 для компиляции библиотеки sqlite3
 
 # Настройка системы
 Настройка системы осуществляется в файле `options.js`
@@ -33,12 +42,6 @@ OR
 OR
 
 `node app.js [token]`
-
-Windows (и прочие системы)
-1) Скопировать репозиторий
-2) Удалить папку node_modules
-3) Установить модули и скомпилировать командой npm i
-4) (опционально) Установить python3 для компиляции библиотеки sqlite3
 
 # Функциональные возможности
 - Получение/обработка Market-data в реальном времени по протоколу GRPC с серверов Тинькоф Инвестиций, в том числе стаканов/свечей/служебных сообщений
