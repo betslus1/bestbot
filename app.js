@@ -136,6 +136,7 @@ app = new (function (){
     }catch(err){
       brokerIsWork = false;
       log('balanceSync', new String(err), 'error');
+      return;
     }
 
     brokerIsWork = true;
@@ -177,6 +178,7 @@ app = new (function (){
     }catch(err){
       brokerIsWork = false;
       log('ordersSync', JSON.stringify(err), 'error');
+      return;
     }
 
 
