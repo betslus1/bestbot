@@ -18,7 +18,7 @@ https://github.com/Tinkoff/invest-robot-contest
 
 вручную
 
-`Скопировать данный репозитарий`
+`Скопировать данный репозитарий кнопкой Download ZIP`
 
 `Скопировать репозитарий https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS в папку lib`
 
