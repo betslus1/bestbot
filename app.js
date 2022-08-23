@@ -73,7 +73,7 @@ async function init(){
   jobs['step']        = new CronJob('*/5 * 7-23,0-2 * * 1-5', app.step,        null, true, 'Europe/Moscow'); //с пн по пятницу с 7 утра до 2 ночи каждые 5 сек
   jobs['balanceSync'] = new CronJob('*/3 * 7-23,0-2 * * 1-5', app.balanceSync, null, true, 'Europe/Moscow');
   jobs['ordersSync']  = new CronJob('*/3 * 7-23,0-2 * * 1-5', app.ordersSync,  null, true, 'Europe/Moscow');
-  jobs['loadTrades']  = new CronJob('0   * 7-23,0-2 * * 1-5', app.loadTrades,  null, true, 'Europe/Moscow');
+  jobs['loadTrades']  = new CronJob('0   */5 7-23,0-2 * * 1-5', app.loadTrades,  null, true, 'Europe/Moscow');
   jobs['clearError']  = new CronJob('0   0 7-23,0-2 * * 1-5', app.clearError,  null, true, 'Europe/Moscow'); //Сброс счетчика ошибок
 }
 
@@ -458,7 +458,7 @@ app = new (function (){
     try {
       var req = {
         "account_id": options.tradeAccount,
-        "from"  : new Date(moment().subtract(60*24*14, 'minute')),
+        "from"  : new Date(moment().subtract(60*24*1, 'minute')),
         "to"    : new Date(moment().add(1, 'minute')),
         "state": "OPERATION_STATE_EXECUTED"
       };
