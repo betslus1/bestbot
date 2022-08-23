@@ -477,9 +477,11 @@ app = new (function (){
             continue;
           }
 
-          for (let q = 0; q<p.quantity; q++){
+          p.lots = Math.round(p.quantity / inst.lot);
+          for (let q = 0; q<p.lots; q++){
             let req = [p.id, q, p.figi, operationType, p.date, p.instrument_type, p.currency, parseFloat(p.price), '', 0];
             await db.query("INSERT OR IGNORE INTO trade (id, n, figi, operationType, date, instrumentType, currency, price, pair, pair_n) VALUES (?,?,?,?,?,?,?,?,?,?)", req);
+            insert++;
           }
         }      
       }
