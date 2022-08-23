@@ -5,6 +5,15 @@ https://github.com/Tinkoff/invest-robot-contest
 
 # Зависимости
 Данная сборка была протестирована в ОС Debian 11 и в NodeJs 16, но предполагается, что она будет работать и в других системах с установленным nodejs.
+Так же могут потребоваться стандартные библиотеки:
+```
+sudo apt-get install gcc g++ make
+sudo apt-get install build-essential
+sudo apt install sqlite3
+sudo apt-get install python
+```
+
+
 
 Используется NodeJS SDK для API Тинькофф Инвестиций GRPC собственной разработки: https://github.com/betslus1/unofficial-tinkoff-invest-api_v2-lazy-sdk-NODEJS
 

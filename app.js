@@ -35,7 +35,7 @@ newCandle        = {'time':new Date(0),o:0,l:0,h:0,c:0,v:0};
 candleHistory    = [];
 sandboxBalance   = 0;
 backtestBalance  = 0;
-realBalance			 = 0;
+realBalance      = 0;
 exchangeStatus   = false;
 errorsCount      = 0;
 lockTime         = 0; //Задержки в работе робота для избежания проблем с лагами брокера
@@ -70,7 +70,7 @@ async function init(){
   await app.loadTrades();//Синхронизация сделок
 
   //Периодическое обновление, можно заменить периодичность
-  jobs['step']        = new CronJob('*/5 * 7-23,0-2 * * 1-5', app.step, 			 null, true, 'Europe/Moscow'); //с пн по пятницу с 7 утра до 2 ночи каждые 5 сек
+  jobs['step']        = new CronJob('*/5 * 7-23,0-2 * * 1-5', app.step,        null, true, 'Europe/Moscow'); //с пн по пятницу с 7 утра до 2 ночи каждые 5 сек
   jobs['balanceSync'] = new CronJob('*/3 * 7-23,0-2 * * 1-5', app.balanceSync, null, true, 'Europe/Moscow');
   jobs['ordersSync']  = new CronJob('*/3 * 7-23,0-2 * * 1-5', app.ordersSync,  null, true, 'Europe/Moscow');
   jobs['loadTrades']  = new CronJob('0   * 7-23,0-2 * * 1-5', app.loadTrades,  null, true, 'Europe/Moscow');
@@ -136,6 +136,7 @@ app = new (function (){
     }catch(err){
       brokerIsWork = false;
       log('balanceSync', new String(err), 'error');
+      return;
     }
 
     brokerIsWork = true;
@@ -177,6 +178,7 @@ app = new (function (){
     }catch(err){
       brokerIsWork = false;
       log('ordersSync', JSON.stringify(err), 'error');
+      return;
     }
 
 
